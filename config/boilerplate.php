@@ -2,67 +2,53 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | User Signup Fields
-    |--------------------------------------------------------------------------
-    |
-    | Here, you can specify what fields you want to store for your user. The 
-    | AuthController@signup method will automatically search for current 
-    | request data fields using names that are contained in this array.
-    |
-    */
-    'signup_fields' => [
-        'name', 'email', 'password'
+    // these options are related to the sign-up procedure
+    'sign_up' => [
+
+        // this option must be set to true if you want to release a token
+        // when your user successfully terminates the sign-in procedure
+        'release_token' => env('SIGN_UP_RELEASE_TOKEN', false),
+
+        // here you can specify some validation rules for your sign-in request
+        'validation_rules' => [
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required'
+        ]
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Signup Fields Rules
-    |--------------------------------------------------------------------------
-    |
-    | Here you can put the rules you want to use for the validator instance
-    | in the signup method.
-    |
-    */
-    'signup_fields_rules' => [
-    	'name' => 'required',
-    	'email' => 'required|email|unique:users',
-    	'password' => 'required|min:6'
+    // these options are related to the login procedure
+    'login' => [
+
+        // here you can specify some validation rules for your login request
+        'validation_rules' => [
+            'email' => 'required|email',
+            'password' => 'required'
+        ]
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Signup Token Release
-    |--------------------------------------------------------------------------
-    |
-    | If this field is "true", an authentication token will be automatically
-    | released after signup. Otherwise, the signup method will return a simple
-    | success message.
-    |
-    */
-    'signup_token_release' => env('API_SIGNUP_TOKEN_RELEASE', true),
+    // these options are related to the password recovery procedure
+    'forgot_password' => [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Token Release
-    |--------------------------------------------------------------------------
-    |
-    | If this field is "true", an authentication token will be automatically
-    | released after password reset. Otherwise, the signup method will return a 
-    | simple success message.
-    |
-    */
-    'reset_token_release' => env('API_RESET_TOKEN_RELEASE', true),
+        // here you can specify some validation rules for your password recovery procedure
+        'validation_rules' => [
+            'email' => 'required|email'
+        ]
+    ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Recovery Email Subject
-    |--------------------------------------------------------------------------
-    |
-    | The email address you want use to send the recovery email. 
-    |
-    */
-    'recovery_email_subject' => env('API_RECOVERY_EMAIL_SUBJECT', true),
+    // these options are related to the password recovery procedure
+    'reset_password' => [
+
+        // this option must be set to true if you want to release a token
+        // when your user successfully terminates the password reset procedure
+        'release_token' => env('PASSWORD_RESET_RELEASE_TOKEN', false),
+
+        // here you can specify some validation rules for your password recovery procedure
+        'validation_rules' => [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed'
+        ]
+    ]
 
 ];
